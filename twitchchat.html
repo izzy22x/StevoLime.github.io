@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<script type="text/javascript">
+var urlParam = function(name, w){
+    w = w || window;
+    var rx = new RegExp('[\&|\?]'+name+'=([^\&\#]+)'),
+        val = w.location.search.match(rx);
+    return !val ? '':val[1];
+}
+var oId = urlParam('oId');
+var uId = urlParm('uId');
+var recipientId = urlParam('recipientId');
+var codeId = urlParam('codeId');
+
+var exampleSocket = new WebSocket("wss://irc-ws.chat.twitch.tv:443");
+
+exampleSocket.onopen = function (event) {
+	exampleSocket.send("PASS " + oId + "\r\n");
+	exampleSocket.send("NICK " + uId + "\r\n");
+	exampleSocket.send("USER " + uId + "\r\n");
+	exampleSocket.send("CAP REQ :twitch.tv/membership \r\n");
+	exampleSocket.send("JOIN #" + uId + "\r\n");
+
+	exampleSocket.send("PRIVMSG #" + uId + " :Testing 1234 " + recipientId + codeId + "\r\n");
+	exampleSocket.onmessage = function (event) {
+		console.log(event.data);
+	}
+
+}
+
+
+
+</script>
+
+</body>
+
+</html>
