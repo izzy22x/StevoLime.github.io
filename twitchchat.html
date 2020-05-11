@@ -3,6 +3,19 @@
 <head>
 </head>
 <body>
+<!--
+This code is developed by Steven Anderson, aka StevoLime.
+This is made to send a whisper/direct message on twitch by url.
+Including the correct variables in the URL will have it connect to twitch and send a whisper.
+This was designed to use with animal crossing turnip queue from a google sheets document.
+
+required variables:
+oId = oauth code from twitch
+uId = your twitch username as lowercase
+recipientId = the recipient's twitch username as lowercase
+codeId = is the message to send
+
+-->
 <script type="text/javascript">
 var urlParam = function(name, w){
     w = w || window;
@@ -27,6 +40,11 @@ exampleSocket.onopen = function (event) {
 	exampleSocket.send("PRIVMSG #" + uId + " :/w " + recipientId + " " + codeId + "\r\n");
 	exampleSocket.onmessage = function (event) {
 		console.log(event.data);
+		var chatMsg = event.data;
+		if (chatMsg.includes("PING")) {
+			exampleSocket.send("PONG :tmi.twitch.tv");
+			console.log("PONG Sent")
+		}
 	}
 
 }
@@ -34,6 +52,8 @@ exampleSocket.onopen = function (event) {
 
 
 </script>
+<h3>Code is running</h3>
+If you would like to see the magic in the background, Press F12 and view the console in the developer console.
 
 </body>
 
