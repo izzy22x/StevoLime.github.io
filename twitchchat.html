@@ -24,7 +24,7 @@ exampleSocket.onopen = function (event) {
 	exampleSocket.send("CAP REQ :twitch.tv/membership \r\n");
 	exampleSocket.send("JOIN #" + uId + "\r\n");
 
-	exampleSocket.send("PRIVMSG #" + uId + " :Testing 1234 " + recipientId + codeId + "\r\n");
+	exampleSocket.send("PRIVMSG #" + uId + " :/w " + recipientId + " " + codeId + "\r\n");
 	exampleSocket.onmessage = function (event) {
 		console.log(event.data);
 	}
